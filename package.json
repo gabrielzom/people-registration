@@ -1,11 +1,30 @@
 {
-  "name": "@persons register",
+  "name": "persons",
   "version": "1.0.0",
   "description": "app for persons register",
   "main": "app.js",
   "scripts": {
-    "start" : "node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "method-override": "^3.0.0",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.2",
+    "nodemailer-mailgun-transport": "^2.1.3",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.17.0",
+    "set-value": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.15"
   },
   "author": "gabriel nascimento",
   "license": "ISC"
