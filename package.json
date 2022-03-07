@@ -1,0 +1,12 @@
+{
+  "name": "@persons register",
+  "version": "1.0.0",
+  "description": "app for persons register",
+  "main": "app.js",
+  "scripts": {
+    "start" : "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gabriel nascimento",
+  "license": "ISC"
+}
