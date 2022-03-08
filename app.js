@@ -1,8 +1,5 @@
 const express = require("express");
 //const cliente = require("./routes/cliente")
-//const home    = require("./routes/home")
-//const usuario = require("./routes/usuario")
-//const send    = require("./routes/send")
 const methodOverride = require("method-override");
 const session = require("express-session")
 const flash = require("connect-flash")
@@ -57,11 +54,14 @@ app.use("/clientes/historico/editar", cliente)
 app.use("/clientes/historico/excluir", cliente)
 app.use("/clientes/editar", cliente)
 app.use("/clientes/excluir", cliente)
+
 app.use("/", home)
-app.use("/send", send)
 */
 
 
+app.get("/", (req, res) =>
+    res.status(200).render("home")
+)
 app.listen(port, () => {
   console.log(`App listen in port: http://localhost:${port}`)
 })
