@@ -14,7 +14,7 @@ const download = async (req, res) => {
     date = `${date.getFullYear()}-${month}-${day}`
     
     result.forEach(row => {
-        text+=`${(row.dataValues.name_in_hebrew).toUpperCase()};${(row.dataValues.date_of_born).toISOString().split('T')[0]};${(row.dataValues.email).toUpperCase()};${date}\n`
+        text+=`${(row.dataValues.name_in_hebrew).toUpperCase()};${row.dataValues.date_of_born};${(row.dataValues.email).toUpperCase()};${date}\n`
     })
 
     let fileName = `${date}.txt`;

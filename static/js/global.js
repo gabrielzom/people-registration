@@ -29,7 +29,6 @@ for (let i=0; i<dates.length; i++) {
   dates[i].innerText = moment(dates[i].innerText).format("DD/MM/YYYY")
 }
 
-
 $("#btn-logout").on("click", () => {
 	$("#modal-logout").modal("show");
   })

@@ -10,7 +10,7 @@ const Peoples = databaseContext.define("peoples", {
     name_of_father_in_hebrew : DataTypes.STRING(60),
     name_of_mother_in_hebrew : DataTypes.STRING(60),
     name_of_grandmother : DataTypes.STRING(60),
-    date_of_born : DataTypes.DATE,
+    date_of_born : DataTypes.STRING(10),
     time_course_of_born : DataTypes.STRING(10),
     number_of_cellphone : DataTypes.STRING(20),
     email : DataTypes.STRING(60),
