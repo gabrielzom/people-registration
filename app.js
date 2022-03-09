@@ -4,15 +4,15 @@ import methodOverride from "method-override";
 import session from "express-session";
 import flash from "connect-flash";
 import { config } from "dotenv";
-//import { auth } from "./config/auth";
+import { auth } from "./config/auth.js";
 import { people } from "./routes/people.js";
-//import user from "./routes/user";
+import { user } from "./routes/user.js";
 
 var one_day = 86400000;
 var port = process.env.PORT || 9090
 
 const app = express();
-//auth(passport);
+auth(passport);
 config();
 
 app.use(session({
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(express.static("public"))
+app.use(express.static("static"))
 app.use(methodOverride("_method"))
 app.use(express.json())
 app.use(express.urlencoded({extended : false}))
@@ -42,7 +42,7 @@ app.use(express.urlencoded({extended : false}))
 app.set('view engine', 'ejs')
 app.set('views', ('./views'))
 
-//app.use("/user", user)
+app.use("/user", user)
 app.use("/", people)
 
 app.listen(port, () => {

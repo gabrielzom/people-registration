@@ -1,2 +1,199 @@
 <%-include("../layout/header");%>
+<div style="background-color: #c3bebe; padding:20px" class="container-fluid">
+    <div style="background-color: #fff; border-radius: 10px; padding:20px" class="container">
+      <% if (error_msg == '') { %>
+        <%} else { %>
+        <div id="div-msg-warning" class="container alert alert-danger">
+          <%=error_msg %>
+          <button id="btn-close-msg" style="float: right;" type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+      <% } %>
+      <% if (success_msg == '') { %>
+        <%} else { %>
+        <div id="div-msg-warning" class="container alert alert-success">
+          <%=success_msg %>
+          <button id="btn-close-msg" style="float: right;" type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+      <% } %>
+        <br>
+        <div style="padding-left: 10px; padding-right: 10px" class="container">
+            <h2>Projeto Aniversário Judaico</h2>
+            <hr>
+            <p>
+                B''H<br><br>
+    
+                Em mérito ao aniversário do Rebe de 120 anos, o Beit Chabad Vila Mariana está lançando o "Projeto Aniversario Judaico".<br>
+                Enviaremos para sua casa um kit aniversario próximo à sua data.<br>
+                O proposito desse projeto é, que cada um comemore seu aniversario na data judaica cumprindo os costumes do aniversario.<br>
+                Um Shabat por mês haverá um Kidush especial (sexta a noite) no Beit Chabad Vila Mariana em comemoração aos aniversariantes do mês,<br> 
+                você será avisado quando será comemorado seu aniversario. VENHA E TRAGA SEUS FAMILIARES E AMIGOS!!!<br>  
+                *SE INSCREVA ATÉ O DIA 27\03 E ENTRE EM UM SORTEIO DE VALE PRESENTE DE R$ 300,00*<br>
+                (O formulário deve ser preenchido para cada membro da família, homens, mulheres e crianças de todas as idades)<br>
+            </p>
+            <br>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <h3>INSCREVA-SE</h3>
+                <form class="align-items-center" action="/register-people" method="POST" enctype="application/x-www-form-urlencoded">
+                    <hr>
+                    <h5>Dados Pessoais</h5>
+                    <hr>
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-outline">
+                          <input name="name" required max-length="30" type="text" id="form3Example1" class="form-control" />
+                          <label class="form-label" for="form3Example1">Nome</label>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="form-outline">
+                          <input name="surname" required max-length="40" type="text" id="form3Example2" class="form-control" />
+                          <label class="form-label" for="form3Example2">Sobrenome</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="genre" value="MASCULINO" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1"> Masculino </label>
+                    </div>
+                      
+                      <!-- Default checked radio -->
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="radio" name="genre" value="FEMININO" id="flexRadioDefault2"/>
+                        <label class="form-check-label" for="flexRadioDefault2"> Feminino </label>
+                    </div>
+                    
+                    <div class="form-outline mb-4">
+                        <input name="name_in_hebrew" required max-length="60" type="text" id="form3Example3" class="form-control" />
+                        <label class="form-label" for="form3Example3">Nome em Hebraico</label>
+                    </div>
+                  
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                      <input name="name_of_father_in_hebrew" required max-length="60" type="text" id="form3Example4" class="form-control" />
+                      <label class="form-label" for="form3Example4">Nome do pai em Hebraico</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input name="name_of_mother_in_hebrew" required max-length="60" type="text" id="form3Example4" class="form-control" />
+                        <label class="form-label" for="form3Example4">Nome da mãe em Hebraico</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input name="name_of_grandmother" required max-length="60" type="text" id="form3Example4" class="form-control" />
+                        <label class="form-label" for="form3Example4">Nome e sobrenome da avó materna de solteira</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input name="date_of_born" required type="date" id="form3Example4" class="form-control" />
+                        <label class="form-label" for="form3Example4">Data de nascimento</label>
+                    </div>
+
+                    <label class="form-check-label" for="flexRadioDefault1"> Você nasceu de dia ou de noite ? </label>
+                    <p style="font-size:13px">
+                        (No calendário judaico o dia termina no pôr do sol, portanto se o nascimento for em uma certa data entre o pôr do sol e meia noite, a data no calendário Judaico seria o próximo dia, do que corresponde aquela data com o calendário gregoriano)
+                    </p>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="time_course_of_born" value="DIA" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1"> Dia <p style="font-size:12px">(após a meia noite e até o pôr do sol)</p></label>
+                    </div>
+                      
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="time_course_of_born" value="NOITE" id="flexRadioDefault2"/>
+                        <label class="form-check-label" for="flexRadioDefault2"> Noite <p style="font-size:12px">(após o pôr do sol e até a meia noite)</p></label>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="radio" name="time_course_of_born" value="" id="flexRadioDefault2"/>
+                        <label class="form-check-label" for="flexRadioDefault2"> Não Sei <p style="font-size:12px">(se souber o horário, coloque nos comentários)</p></label>
+                    </div>
+                    <hr>
+                    <h5>Contato</h5>
+                    <hr>
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-2">
+                            <div class="form-outline">
+                              <input name="number_of_cellphone" required max-length="20" type="text" id="input-number_of_cellphone" class="form-control" />
+                              <label class="form-label" for="form3Example1">Número de celular</label>
+                            </div>
+                          </div>
+    
+                          <div class="col-md-8">
+                            <div class="form-outline">
+                              <input name="email" required max-length="60" type="email" id="form3Example2" class="form-control" />
+                              <label class="form-label" for="form3Example2">E-mail</label>
+                            </div>
+                          </div>
+                    </div>
+                    
+                    <hr>
+                    <h5>Endereço</h5>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-md-3 mb-2">
+                            <div class="form-outline">
+                              <input name="zip_code" required max-length="10" type="text" id="input-zip_code" class="form-control" />
+                              <label class="form-label" for="form3Example1">CEP</label>
+                            </div>
+                          </div>
+    
+                          <div class="col-md-3 mb-2">
+                            <div class="form-outline">
+                              <input name="number_of_place" required max-length="7" type="text" id="form3Example2" class="form-control" />
+                              <label class="form-label" for="form3Example2">Número</label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-outline">
+                              <input name="public_place" required max-length="7" type="text" id="input-public_place" class="form-control" />
+                              <label class="form-label" for="form3Example2">Logradouro</label>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-7 mb-2">
+                            <div class="form-outline">
+                              <input name="district" required max-length="10" type="text" id="input-district" class="form-control" />
+                              <label class="form-label" for="form3Example1">Bairro</label>
+                            </div>
+                          </div>
+    
+                          <div class="col-md-3 mb-2">
+                            <div class="form-outline">
+                              <input name="city" required max-length="7" type="text" id="input-city" class="form-control" />
+                              <label class="form-label" for="form3Example2">Cidade</label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-2">
+                            <div class="form-outline">
+                              <input name="state" required max-length="7" type="text" id="input-state" class="form-control" />
+                              <label class="form-label" for="form3Example2">UF</label>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="form-outline mb-4">
+                      <input name="complement_of_adress" required max-length="30" type="text" id="form3Example4" class="form-control" />
+                      <label class="form-label" for="form3Example4">Complemento (bloco, apartamento, casa)</label>
+                    </div>
+                    <hr>
+                    <h5>Comentários</h5>
+                    <hr>
+                    <div class="form-outline mb-4">
+                      <textarea name="comments" required max-length="300" type="text" id="form3Example4" class="form-control">
+                      </textarea>
+                      <label class="form-label" for="form3Example4">Digite aqui o seu comentário (máximo 300 caracteres)</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Enviar Dados</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
 <%-include("../layout/footer");%>

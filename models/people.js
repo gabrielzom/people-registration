@@ -17,6 +17,9 @@ const Peoples = databaseContext.define("peoples", {
     zip_code : DataTypes.STRING(10),
     public_place : DataTypes.STRING(60),
     number_of_place : DataTypes.STRING(7),
+    district : DataTypes.STRING(30),
+    city : DataTypes.STRING(30),
+    state : DataTypes.STRING(2),
     complement_of_adress : DataTypes.STRING(30),
     comments : DataTypes.STRING(300)
     
