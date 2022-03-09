@@ -2,7 +2,7 @@ import { config } from "dotenv";
 config();
 
 import Sequelize from "sequelize";
-const databaseContext = new Sequelize(process.env.POSTGRES_URI);
+const databaseContext = new Sequelize(process.env.MYSQL_URI);
 
 databaseContext.authenticate()
     .then(() => {console.error("-- CONNECTION AUTHENTICATED")})
