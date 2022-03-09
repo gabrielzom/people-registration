@@ -1,25 +1,26 @@
-const express = require("express");
-//const cliente = require("./routes/cliente")
-const methodOverride = require("method-override");
-const session = require("express-session")
-const flash = require("connect-flash")
-const app = express();
-const passport = require("passport")
-const fs = require("fs")
+import express from "express";
+import passport from "passport"
+import methodOverride from "method-override";
+import session from "express-session";
+import flash from "connect-flash";
+import { config } from "dotenv";
+//import { auth } from "./config/auth";
+import { people } from "./routes/people.js";
+//import user from "./routes/user";
 
-var um_dia = 86400000;
+var one_day = 86400000;
 var port = process.env.PORT || 9090
 
-//require("./config/auth")(passport)
-require("dotenv").config();
+const app = express();
+//auth(passport);
+config();
 
 app.use(session({
-  secret : process.env.KEY,
+  secret : process.env.SECRET_SESSION,
   resave : true,
   saveUninitialized : true,
-  cookie : { maxAge : um_dia }
+  cookie : { maxAge : one_day }
 }))
-
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -41,27 +42,9 @@ app.use(express.urlencoded({extended : false}))
 app.set('view engine', 'ejs')
 app.set('views', ('./views'))
 
-/*
-app.use("/usuario", usuario)
-app.use("/usuario/excluir", usuario)
-app.use("/usuario/redefinir", usuario)
-app.use("/usuario/alterar-senha", usuario)
+//app.use("/user", user)
+app.use("/", people)
 
-app.use("/clientes", cliente)
-app.use("/clientes/historico", cliente)
-app.use("/clientes/historico/incluir", cliente)
-app.use("/clientes/historico/editar", cliente)
-app.use("/clientes/historico/excluir", cliente)
-app.use("/clientes/editar", cliente)
-app.use("/clientes/excluir", cliente)
-
-app.use("/", home)
-*/
-
-
-app.get("/", (req, res) =>
-    res.status(200).render("home")
-)
 app.listen(port, () => {
   console.log(`App listen in port: http://localhost:${port}`)
 })

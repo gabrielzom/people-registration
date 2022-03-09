@@ -1,2 +1,7 @@
-<%-include("./layout/header");%>
-<%-include("./layout/footer");%>
+<%-include("../layout/header");%>
+<div class="container">
+    <% peoples.forEach(function(e) { %>
+        <h1><%=e %></h1>
+    <% }); %>
+</div>
+<%-include("../layout/footer");%>
