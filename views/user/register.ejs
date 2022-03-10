@@ -1,0 +1,87 @@
+<%-include("../layout/header");%>
+<div style="background-color: #c3bebe; padding:20px" class="container-fluid">
+    <div style="background-color: #fff; border-radius: 10px; padding:20px" class="container">
+      <% if (error_msg == '') { %>
+        <%} else { %>
+        <div id="div-msg-warning" class="container alert alert-danger">
+          <%=error_msg %>
+          <!--button id="btn-close-msg" style="float: right;" type="button" class="btn-close" aria-label="Close"></button-->
+        </div>
+      <% } %>
+      <% if (success_msg == '') { %>
+        <%} else { %>
+        <div id="div-msg-warning" class="container alert alert-success">
+          <%=success_msg %>
+          <!--button id="btn-close-msg" style="float: right;" type="button" class="btn-close" aria-label="Close"></button-->
+        </div>
+      <% } %>
+        <br>
+        <div style="overflow:auto; padding-left:10px; padding-right:10px" class="container">
+          <h3>USUÁRIOS</h3>
+          <hr>
+          <table class="table table-striped table-hover">
+              <thead>
+                  <tr>
+                      <th>Nome</th>
+                      <th>E-mail</th>
+                      <th>Administrador</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <%users.forEach(user => { %> 
+                      <tr> 
+                          <td><%=user.name_and_surname %></td>
+                          <td><%=user.email %></td>
+                          <% if (user.admin) { %>
+                            <td>SIM</td>
+                          <% } else { %>
+                            <td>NÃO</td>
+                          <% } %>
+                          <td><a href="/users/delete/<%=user.id %>?"><button class="btn btn-danger">DELETAR</button></a></td>
+                      </tr>
+                  <% }) %>
+                  
+              </tbody>
+          </table>
+          <hr>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <h3>CADASTRAR</h3>
+              <form action="/users/signup" method="POST" enctype="application/x-www-form-urlencoded">
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="form-outline mb-4">
+                    <div class="form-outline">
+                      <input name="name_and_surname" maxlength="30" type="text" id="form3Example2" class="form-control" />
+                      <label class="form-label" for="form3Example2">Nome e sobrenome</label>
+                    </div>
+                </div>
+              
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input name="email" maxlength="60" type="email" id="form3Example3" class="form-control" />
+                  <label class="form-label" for="form3Example3">E-mail válido</label>
+                </div>
+              
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input name="password" maxlength="20" type="password" id="form3Example4" class="form-control" />
+                  <label class="form-label" for="form3Example4">Senha</label>
+                </div>
+              
+                <!-- Checkbox -->
+                <div class="form-check d-flex justify-content-center mb-4">
+                  <input name="admin" class="form-check-input me-2" type="checkbox" value="1" id="form2Example33"/>
+                  <label class="form-check-label" for="form2Example33">
+                    Este usuário é um administrador ?
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mb-4">INCLUIR USUÁRIO</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%-include("../layout/footer");%>

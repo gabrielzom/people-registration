@@ -20,6 +20,10 @@ $(document).ready(function () {
 	} else if (window.location.pathname == "/list") {
 		navLink = document.getElementById("path-list")
 		navLink.setAttribute("class",`active ${navLink.getAttribute("class")}`)
+
+	} else if (window.location.pathname == "/users") {
+		navLink = document.getElementById("path-users")
+		navLink.setAttribute("class",`active ${navLink.getAttribute("class")}`)
 	}
 })
 

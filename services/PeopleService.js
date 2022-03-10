@@ -4,7 +4,6 @@ class PeopleService {
     
     async list() {
         const result = await Peoples.findAll();
-        console.log(result);
         return result;
     }
 

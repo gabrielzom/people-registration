@@ -24,7 +24,8 @@
     "pg": "^8.7.3",
     "postgres": "^1.0.2",
     "sequelize": "^6.17.0",
-    "set-value": "^4.1.0"
+    "set-value": "^4.1.0",
+    "xml": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "2.0.15"
