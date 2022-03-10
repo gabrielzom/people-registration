@@ -8,7 +8,7 @@ import nodemailer from "nodemailer";
 import { config } from "dotenv";
 import { Users } from "../models/user.js";
 import { databaseContext } from "../models/databaseContext.js";
-import { peoplesToXml } from "../services/peoplesToXml.js"
+import { peoplesToJson } from "../services/peoplesToJson.js"
 config();
 
 const people = Router();
@@ -105,7 +105,7 @@ people.post("/users/signup", accessLevel.isAdmin, async (req, res) => {
         })
 })
 
-people.get("/exportallpeoples", peoplesToXml)
+people.get("/exportallpeoples", peoplesToJson)
 people.get("/", (req, res) => peopleController.renderRegister(req, res))
 people.get("/list", accessLevel.isOperator, (req, res) => peopleController.renderPeoplesList(req, res))
 people.get("/export-peoples", accessLevel.isAdmin, download)

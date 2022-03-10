@@ -1,15 +1,17 @@
 import { Peoples } from "../models/people.js";
-import xml from "xml";
-async function peoplesToXml(req, res) {
+
+async function peoplesToJson(req, res) {
+
     let result = [];
-    let resultXml = '<?xml version="1.0" encoding="UTF-8"?> <peoples>';
+    //let resultXml = '<?xml version="1.0" encoding="UTF-8"?> <peoples>';
     const peoples = await Peoples.findAll();
-    res.set("Content-Type", "text/xml")
+    //res.set("Content-Type", "text/json")
 
     peoples.forEach(function(people) {
         result.push(people.dataValues)
     })
 
+    /*
     result.forEach(function(data) {
         resultXml+= 
             `<people>
@@ -35,13 +37,12 @@ async function peoplesToXml(req, res) {
                 <comments>${data.comments}</comments>
             </people>`
     })
-
+    
     resultXml+="</peoples>"
+    */
 
-    console.log(resultXml)
-
-    return res.status(200).send(resultXml)
+    return res.status(200).send(result)
 }
 
 
-export { peoplesToXml }
+export { peoplesToJson }
