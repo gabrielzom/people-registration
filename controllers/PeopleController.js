@@ -1,5 +1,5 @@
 import { PeopleService } from "../services/PeopleService.js";
-import express from "express";
+
 class PeopleController {
 
     peopleService = new PeopleService();
@@ -18,8 +18,9 @@ class PeopleController {
         res.render("./people/success-register")
     }
 
-    exportPeoples() {
-        this.peopleService.export()
+    async exportPeoples(req, res) {
+        const filename = await this.peopleService.export()
+        res.type('text').download(`./temp/${filename}`)
     }
 }
      

@@ -8,6 +8,10 @@ const Users = databaseContext.define("users", {
     admin : {
         type : DataTypes.BOOLEAN,
         default : false
+    },
+    verified : {
+        type : DataTypes.BOOLEAN,
+        default : false
     }
 })
 

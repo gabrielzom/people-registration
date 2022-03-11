@@ -38,7 +38,7 @@
                           <% } else { %>
                             <td>NÃO</td>
                           <% } %>
-                          <td><a href="/users/delete/<%=user.id %>?"><button class="btn btn-danger">DELETAR</button></a></td>
+                          <td><a href="/user/delete/<%=user.id %>?"><button class="btn btn-danger">DELETAR</button></a></td>
                       </tr>
                   <% }) %>
                   
@@ -50,7 +50,7 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
               <h3>CADASTRAR</h3>
-              <form action="/users/signup" method="POST" enctype="application/x-www-form-urlencoded">
+              <form action="/user/signup" method="POST" enctype="application/x-www-form-urlencoded">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="form-outline mb-4">
                     <div class="form-outline">

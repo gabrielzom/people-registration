@@ -44,3 +44,4 @@ $("#btn-logout").on("click", () => {
 $("#btn-close-msg").on("click", () => {
 	$(".container").remove("#div-msg-warning")
 })
+
