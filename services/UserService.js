@@ -59,7 +59,6 @@ class UserService {
     }
 
     async verifyAccount(id) {
-        console.log("--VERIFICANDO ID DE VALIDAÇÃO DE EMAIL: " + id)
         await Users.update(
             {
                 verified : 1
@@ -71,7 +70,6 @@ class UserService {
     }
 
     async updatePassword(password, id) {
-        console.log("--VERIFICANDO ID DE RECUPERAÇÃO: " + id)
         await Users.update(
             {
                 password : databaseContext.literal(`AES_ENCRYPT('${password}','${process.env.USER_PASSWORD_KEY}')`)
