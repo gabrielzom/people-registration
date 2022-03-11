@@ -48,7 +48,10 @@ class UserController {
 
         if (req.params.id == req.user.id) {
             this.renderUsersList(req, res, "Não é possível deletar um usuário autenticado. ", "")
-
+        
+        } else if (req.user.admin == 1) {
+            this.renderUsersList(req, res, "Não é possível deletar um usuário administrador. ", "")
+        
         } else {
             await this.userService.delete(req.params.id);
             return res.redirect("/user/list");
