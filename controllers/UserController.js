@@ -127,18 +127,24 @@ class UserController {
 
         let result = await this.userService.selectOneByRecoveryHash(recoveryHash)
 
-        if (isValidLink(result.updatedAt)) {
-
-            if (result && result.in_recovery == 1) {
-                await this.userService.updatePassword(req.body.password, recoveryHash)
-                res.render("./user/recoverypasswordcomplete")
-    
-            } else {
-                this.renderUserRecoveryPassword(req, res, "Usuário não solicitou recuperação de senha e/ou não autorizado")
-            }
+        if (result == null) {
+            this.renderUserRecoveryPassword(req, res, "Link de recuperação de senha expirado.")
 
         } else {
-            this.renderUserRecoveryPassword(req, res, "Link de recuperação de senha expirado.")
+
+            if (isValidLink(result.updatedAt)) {
+
+                if (result && result.in_recovery == 1) {
+                    await this.userService.updatePassword(req.body.password, recoveryHash)
+                    res.render("./user/recoverypasswordcomplete")
+        
+                } else {
+                    this.renderUserRecoveryPassword(req, res, "Usuário não solicitou recuperação de senha e/ou não autorizado")
+                }
+    
+            } else {
+                this.renderUserRecoveryPassword(req, res, "Link de recuperação de senha expirado.")
+            }
         }
     }
 }
