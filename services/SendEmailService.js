@@ -1,10 +1,12 @@
 import nodemailer from "nodemailer";
 import { config } from "dotenv";
+import { UserService } from "../services/UserService.js"
 config();
 
 class SendEmailService {
 
     transporter;
+    userService = new UserService();
 
     constructor() {
          this.transporter = nodemailer.createTransport({
@@ -19,9 +21,8 @@ class SendEmailService {
 
     async sendEmailForVerifyNewAccount(email, idVerify) {
 
-        idVerify  = Number(idVerify);
-        idVerify *= Number(process.env.USER_PASSWORD_SEND_EMAIL)
-        idVerify += Number(process.env.USER_PASSWORD_SEND_EMAIL)
+        idVerify *= Number(process.env.USER_PASSWORD_SEND_EMAIL);
+        idVerify += Number(process.env.USER_PASSWORD_SEND_EMAIL);
         
         const response = await this.transporter.sendMail({
             
@@ -38,7 +39,7 @@ class SendEmailService {
                 <title>Verify Your Acc</title>
             </head>
             <body>
-                <a href="http://localhost:9090/user/verify/${idVerify}">Clique aqui para verificar seu e-mail</a>
+                <a href="https://people-registers.herokuapp.com/user/verify/${idVerify}">Clique aqui para verificar seu e-mail</a>
             </body>
             </html>`
         })
@@ -49,9 +50,9 @@ class SendEmailService {
 
     async recoveryPassword(email, idRecovery) {
 
-        idRecovery  = Number(idRecovery);
-        idRecovery *= Number(process.env.USER_PASSWORD_SEND_EMAIL)
-        idRecovery += Number(process.env.USER_PASSWORD_SEND_EMAIL)
+        let recoveryHash = global.SHA;
+
+        await this.userService.setRecoveryHash(idRecovery, recoveryHash);
 
         const response = await this.transporter.sendMail({
             
@@ -68,7 +69,8 @@ class SendEmailService {
                 <title>Recovery your pass</title>
             </head>
             <body>
-                <a href="http://localhost:9090/user/recoverypassword/${idRecovery}">Clique aqui para alterar sua senha</a>
+                <h2>Este link expira em 20 minutos</h2>
+                <a href="https://people-registers.herokuapp.com/user/recoverypassword/${recoveryHash}">Clique aqui para alterar sua senha</a>
             </body>
             </html>`
         })

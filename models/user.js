@@ -12,7 +12,12 @@ const Users = databaseContext.define("users", {
     verified : {
         type : DataTypes.BOOLEAN,
         default : false
-    }
+    },
+    in_recovery : {
+        type : DataTypes.BOOLEAN,
+        default : false
+    },
+    recovery_hash : DataTypes.DECIMAL(20,2)
 })
 
 export { Users }

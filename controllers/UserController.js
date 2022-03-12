@@ -3,10 +3,42 @@ import { SendEmailService } from "../services/SendEmailService.js";
 import { config } from "dotenv";
 config();
 
+function isValidLink(updatedAt) {
+
+    let newDate = new Date().toISOString();
+    updatedAt = updatedAt.toISOString();
+    
+    let newDay = Number(newDate.slice(8,10));
+    let updatedDay = Number(updatedAt.slice(8,10))
+
+    if (newDay > updatedDay) {
+        return false;
+
+    } else {
+        let newHours   = Number(newDate.slice(11,13));
+        let newMinutes = Number(newDate.slice(14,16));
+        newMinutes += (newHours*60);
+
+        let updatedHours = Number(updatedAt.slice(11,13));
+        let updatedMinutes = Number(updatedAt.slice(14,16));
+        updatedMinutes += (updatedHours*60);
+
+        let diferenceMinutes = newMinutes - updatedMinutes;
+
+        if (diferenceMinutes <= 20) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+}
+
 class UserController {
 
     userService = new UserService();
     sendEmailService = new SendEmailService();
+
 
     renderUserLogin(req, res) {
         res.render("./user/login")
@@ -32,7 +64,7 @@ class UserController {
 
     async registerUser(req, res) {
 
-        const result = await this.userService.selectOne(req.body.email);
+        const result = await this.userService.selectOneByEmail(req.body.email);
 
         if (result) {
             this.renderUsersList(req, res, "Este endereço de e-mail já está sendo usado. ", "");
@@ -74,7 +106,7 @@ class UserController {
     }
 
     async sendEmailForRecoveryPassword(req, res) {
-        const user = await this.userService.selectOne(req.body.email);
+        const user = await this.userService.selectOneByEmail(req.body.email);
 
         if (!user) {
             this.renderForgotPassword(req, res, "Este e-mail de usuário não existe")
@@ -85,22 +117,30 @@ class UserController {
         }
     }
     
-    renderUserRecoveryPassword(req, res) {
-        res.render("./user/recoverypassword")
+    renderUserRecoveryPassword(req, res, error) {
+        res.render("./user/recoverypassword", { error })
     }
 
     async updateUserPassword(req, res) {
 
-        let idRecovery = Number(req.params.id)
-        idRecovery -= Number(process.env.USER_PASSWORD_SEND_EMAIL);
-        idRecovery /= Number(process.env.USER_PASSWORD_SEND_EMAIL);
+        let recoveryHash = Number(req.params.id).toFixed(2)
 
-        await this.userService.updatePassword(req.body.password, idRecovery)
+        let result = await this.userService.selectOneByRecoveryHash(recoveryHash)
 
-        res.render("./user/recoverypasswordcomplete")
+        if (isValidLink(result.updatedAt)) {
 
+            if (result && result.in_recovery == 1) {
+                await this.userService.updatePassword(req.body.password, recoveryHash)
+                res.render("./user/recoverypasswordcomplete")
+    
+            } else {
+                this.renderUserRecoveryPassword(req, res, "Usuário não solicitou recuperação de senha e/ou não autorizado")
+            }
+
+        } else {
+            this.renderUserRecoveryPassword(req, res, "Link de recuperação de senha expirado.")
+        }
     }
-
 }
-     
+    
 export { UserController }

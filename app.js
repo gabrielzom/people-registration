@@ -10,6 +10,12 @@ import { user } from "./routes/user.js";
 
 var one_day = 86400000;
 var port = process.env.PORT || 9090
+var ten_seconds = 10000;
+global.sha = (Math.random() * Number(process.env.USER_PASSWORD_SEND_EMAIL)).toFixed(2)
+
+function setSHA() {
+  global.SHA = (Math.random() * Number(process.env.USER_PASSWORD_SEND_EMAIL)).toFixed(2)
+}
 
 const app = express();
 auth(passport);
@@ -31,6 +37,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg")
   res.locals.error = req.flash("error")
   res.locals.user = req.user || null
+  res.locals.hash = global.sha
   next()
 })
 
@@ -47,4 +54,8 @@ app.use("/", people)
 
 app.listen(port, () => {
   console.log(`App listen in port: http://localhost:${port}`)
+  setInterval(() => {
+    setSHA()
+  }
+  , ten_seconds);
 })

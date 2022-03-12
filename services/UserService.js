@@ -4,7 +4,15 @@ import passport from "passport";
 
 class UserService {
 
-    async selectOne(email) {
+    async selectOneByRecoveryHash(recovery_hash) {
+        const result = await Users.findOne({
+            where: { recovery_hash }
+        })
+
+        return result;
+    }
+
+    async selectOneByEmail(email) {
         const result = await Users.findOne({
             where: { email}
         })
@@ -58,6 +66,18 @@ class UserService {
         req.flash("success_msg", "Você foi desconectado com sucesso");
     }
 
+    async setRecoveryHash(id, recovery_hash) {
+        await Users.update(
+            {
+                in_recovery : 1,
+                recovery_hash
+            },
+            {
+                where : { id }
+            }
+        )
+    }
+
     async verifyAccount(id) {
         await Users.update(
             {
@@ -69,13 +89,14 @@ class UserService {
         )
     }
 
-    async updatePassword(password, id) {
+    async updatePassword(password, recovery_hash) {
         await Users.update(
             {
-                password : databaseContext.literal(`AES_ENCRYPT('${password}','${process.env.USER_PASSWORD_KEY}')`)
+                password : databaseContext.literal(`AES_ENCRYPT('${password}','${process.env.USER_PASSWORD_KEY}')`),
+                in_recovery : 0
             },
             {
-                where : { id }
+                where : { recovery_hash }
             }
         )
     }

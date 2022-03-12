@@ -45,7 +45,7 @@ user.post("/forgotpassword", (req, res) =>
 )
 
 user.get("/recoverypassword/:id", (req, res) =>
-    userController.renderUserRecoveryPassword(req, res)
+    userController.renderUserRecoveryPassword(req, res, "")
 )
 
 user.put("/recoverypassword/:id", (req, res) =>
