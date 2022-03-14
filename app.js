@@ -11,7 +11,7 @@ import { user } from "./routes/user.js";
 var one_day = 86400000;
 var port = process.env.PORT || 9090
 var ten_seconds = 10000;
-global.sha = (Math.random() * Number(process.env.USER_PASSWORD_SEND_EMAIL)).toFixed(2)
+global.SHA = (Math.random() * Number(process.env.USER_PASSWORD_SEND_EMAIL)).toFixed(2)
 
 function setSHA() {
   global.SHA = (Math.random() * Number(process.env.USER_PASSWORD_SEND_EMAIL)).toFixed(2)

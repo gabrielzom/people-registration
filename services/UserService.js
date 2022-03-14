@@ -4,6 +4,12 @@ import passport from "passport";
 
 class UserService {
 
+    async selectOneById(id) {
+        const result = await Users.findByPk(id)
+        return result;
+    }
+    
+
     async selectOneByRecoveryHash(recovery_hash) {
         const result = await Users.findOne({
             where: { recovery_hash }
