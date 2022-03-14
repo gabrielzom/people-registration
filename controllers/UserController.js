@@ -72,7 +72,7 @@ class UserController {
         } else {
             const user = await this.userService.save(req.body);
             await this.sendEmailService.sendEmailForVerifyNewAccount(user.email, user.id);
-            this.renderUsersList(req, res, "", "Usuário incluído com sucesso.");
+            this.renderUsersList(req, res, "", "Usuário incluído com sucesso. Peça ao novo usuário que acesse seu e-mail e confirme o cadastro.");
         }
     }
 

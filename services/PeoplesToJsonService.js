@@ -5,14 +5,23 @@ config();
 class PeoplesToJsonService {
 
     async execute(req, res) {
-        let result = [];
-        const peoples = await Peoples.findAll();
 
-        peoples.forEach(function(people) {
-            result.push(people.dataValues);
-        })
+        if (req.headers.authorization != process.env.AUTHORIZATION_TOKEN) {
+            return res.status(401).render("unauthorized");
 
-        return res.status(200).send(result);
+        } else {
+            let result = [];
+            const peoples = await Peoples.findAll();
+            
+            peoples.forEach(function(people) {
+                result.push(people.dataValues);
+            })
+
+            res.set("Content-Type", "text/json");
+    
+            return res.status(200).send(result);
+        }
+         
     }
    
 }
