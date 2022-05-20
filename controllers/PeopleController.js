@@ -22,6 +22,10 @@ class PeopleController {
         const filename = await this.peopleService.export()
         res.type('text').download(`./temp/${filename}`)
     }
+
+    async peoplesToJson(req, res) {
+        return await this.peopleService.peoplesToJson(req, res)
+    }
 }
      
 export { PeopleController }
