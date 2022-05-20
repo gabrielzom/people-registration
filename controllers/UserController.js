@@ -1,39 +1,8 @@
 import { UserService } from "../services/UserService.js";
 import { SendEmailService } from "../services/SendEmailService.js";
+import { isValidLinkToRecoveryPassword } from "../config/isValidLinkToRecoveryPassword.js";
 import { config } from "dotenv";
 config();
-
-function isValidLink(updatedAt) {
-
-    let newDate = new Date().toISOString();
-    updatedAt = updatedAt.toISOString();
-    
-    let newDay = Number(newDate.slice(8,10));
-    let updatedDay = Number(updatedAt.slice(8,10))
-
-    if (newDay > updatedDay) {
-        return false;
-
-    } else {
-        let newHours   = Number(newDate.slice(11,13));
-        let newMinutes = Number(newDate.slice(14,16));
-        newMinutes += (newHours*60);
-
-        let updatedHours = Number(updatedAt.slice(11,13));
-        let updatedMinutes = Number(updatedAt.slice(14,16));
-        updatedMinutes += (updatedHours*60);
-
-        let diferenceMinutes = newMinutes - updatedMinutes;
-
-        if (diferenceMinutes <= 20) {
-            return true;
-
-        } else {
-            return false;
-        }
-    }
-}
-
 class UserController {
 
     userService = new UserService();
@@ -127,14 +96,14 @@ class UserController {
 
         let result = await this.userService.selectOneByRecoveryHash(recoveryHash)
 
-        if (result == null) {
+        if (!result) {
             this.renderUserRecoveryPassword(req, res, "Link de recuperação de senha expirado.")
 
         } else {
 
-            if (isValidLink(result.updatedAt)) {
+            if (isValidLinkToRecoveryPassword(result.updatedAt)) {
 
-                if (result && result.in_recovery == 1) {
+                if (result && result.in_recovery === 1) {
                     await this.userService.updatePassword(req.body.password, recoveryHash)
                     res.render("./user/recoverypasswordcomplete")
         
