@@ -101,9 +101,10 @@ class UserController {
 
     if (!user) {
       this.renderForgotPassword(req, res, ResponseUserMessages.userNotFound);
+
     } else {
       const recovery_uuid = uuid();
-      await this.userService.setRecoveryUuid(idRecovery, recovery_uuid);
+      await this.userService.setRecoveryUuid(user.id, recovery_uuid);
       this.sendEmailService.recoveryPassword(user.email, recovery_uuid);
       res.render("./user/forgotpasswordsended");
     }
@@ -123,7 +124,7 @@ class UserController {
         );
       } else {
         if (isValidLinkToRecoveryPassword(result.updatedAt)) {
-          if (result.in_recovery === 1) {
+          if (result.in_recovery == 1) {
             await this.userService.updatePassword(
               req.body.password,
               req.params.recovery_uuid,

@@ -36,7 +36,7 @@ class SendEmailService {
                 <title>Verify Your Acc</title>
             </head>
             <body>
-                <a href="https://people-registers.herokuapp.com/user/verify/${verify_uuid}">Clique aqui para verificar seu e-mail</a>
+                <a href="${process.env.HOST}/user/verify/${verify_uuid}">Clique aqui para verificar seu e-mail</a>
             </body>
             </html>`
         })
@@ -63,7 +63,7 @@ class SendEmailService {
             </head>
             <body>
                 <h2>Este link expira em 20 minutos</h2>
-                <a href="https://people-registers.herokuapp.com/user/recoverypassword/${recovery_uuid}">Clique aqui para alterar sua senha</a>
+                <a href="${process.env.HOST}/user/recoverypassword/${recovery_uuid}">Clique aqui para alterar sua senha</a>
             </body>
             </html>`
         })

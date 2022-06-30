@@ -12,7 +12,7 @@ const accessLevel = {
 
     } else {
       req.flash("error_msg", ResponseAccessLevelMessages.useAdminLogin)
-       res.redirect("/")
+      res.redirect("/")
     }
   },
 

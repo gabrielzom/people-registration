@@ -60,7 +60,8 @@ class UserService {
     });
   }
 
-  login(req, res, next) {
+  async login(req, res, next) {
+
     passport.authenticate("local", {
       successRedirect: "/",
       failureRedirect: "/user/login",

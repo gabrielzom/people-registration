@@ -18,11 +18,11 @@ const Users = databaseContext.define("users", {
         default : false
     },
     recovery_uuid: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(40),
         default: null
     },
     verify_uuid: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(40),
         default: null
     }
 })

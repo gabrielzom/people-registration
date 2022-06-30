@@ -12,7 +12,7 @@ user.get("/login", (req, res) =>
     userController.renderUserLogin(req, res)
 )
 
-user.post("/login", (req, res, next) => 
+user.post("/login",(req, res, next) => 
     userController.userLogin(req, res, next)
 )
 
