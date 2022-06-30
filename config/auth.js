@@ -2,6 +2,7 @@ import { Strategy } from "passport-local";
 import { Users } from "../models/user.js";
 import { databaseContext } from "../models/databaseContext.js";
 import { config } from "dotenv";
+import ResponseAuthMessages from "../utils/ResponseAuthMessages.js"
 config();
 
 const auth = (passport) => {
@@ -13,7 +14,7 @@ const auth = (passport) => {
     })
     .then((result) => {  
       if (!result) {
-        return done(null, false, { message : "Este usuário não existe" })
+        return done(null, false, { message : ResponseAuthMessages.userNotFound })
 
       } else {
         databaseContext.query(`SELECT CAST(AES_DECRYPT(password, '${process.env.USER_PASSWORD_KEY}') AS CHAR) AS password FROM users WHERE email='${email}'`)
@@ -22,7 +23,7 @@ const auth = (passport) => {
               return done(null, result)
             
             } else {
-              return done(null, false, { message : "Sua senha está incorreta" })
+              return done(null, false, { message : ResponseAuthMessages.passIncorrect })
             }
         })
       } 
@@ -37,7 +38,7 @@ const auth = (passport) => {
     Users.findByPk(id)
       .then((user) => {
         if(!user) {
-          let error = new Error("Não identificado")
+          let error = new Error( ResponseAuthMessages.notIdentified )
           done(error, user)
 
         } else {

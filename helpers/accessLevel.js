@@ -1,3 +1,5 @@
+import ResponseAccessLevelMessages from "../utils/ResponseAccessLevelMessages"
+
 const accessLevel = {
 
   isAdmin : (req, res, next) => {
@@ -5,11 +7,11 @@ const accessLevel = {
       return next()
     
     } else if (req.isAuthenticated() && req.user.admin == 1 && req.user.verified == 0) {
-      req.flash("error_msg", "Confirme seu e-mail de cadastro para ter acesso.")
+      req.flash("error_msg", ResponseAccessLevelMessages.confirmYourEmail)
       res.redirect("/")
 
     } else {
-      req.flash("error_msg", "Use um login de administrador para ter acesso.")
+      req.flash("error_msg", ResponseAccessLevelMessages.useAdminLogin)
        res.redirect("/")
     }
   },
@@ -19,12 +21,12 @@ const accessLevel = {
       return next()
         
     } else if (req.isAuthenticated() && req.user.verified == 0) {
-      req.flash("error_msg", "Confirme seu e-mail de cadastro para ter acesso.")
+      req.flash("error_msg", ResponseAccessLevelMessages.confirmYourEmail)
       res.redirect("/")
     }
   
     else {
-      req.flash("error_msg", "Use um login de operador para ter acesso.")
+      req.flash("error_msg", ResponseAccessLevelMessages.useOperatorLogin)
       res.redirect("/")
     }
   }
