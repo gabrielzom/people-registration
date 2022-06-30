@@ -1,4 +1,4 @@
-import ResponseAccessLevelMessages from "../utils/ResponseAccessLevelMessages"
+import ResponseAccessLevelMessages from "../utils/ResponseAccessLevelMessages.js"
 
 const accessLevel = {
 
