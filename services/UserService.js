@@ -1,111 +1,112 @@
 import { Users } from "../models/user.js";
 import { databaseContext } from "../models/databaseContext.js";
 import passport from "passport";
+import { uuid } from "uuidv4";
 
 class UserService {
+  async selectOneById(id) {
+    const result = await Users.findByPk(id);
+    return result;
+  }
 
-    async selectOneById(id) {
-        const result = await Users.findByPk(id)
-        return result;
-    }
-    
+  async selectOneByRecoveryUuid(recovery_uuid) {
+    const result = await Users.findOne({
+      where: { recovery_uuid },
+    });
 
-    async selectOneByRecoveryHash(recovery_hash) {
-        const result = await Users.findOne({
-            where: { recovery_hash }
-        })
+    return result;
+  }
 
-        return result;
-    }
+  async selectOneByEmail(email) {
+    const result = await Users.findOne({
+      where: { email },
+    });
 
-    async selectOneByEmail(email) {
-        const result = await Users.findOne({
-            where: { email}
-        })
+    return result;
+  }
 
-        return result;
-    }
-    
-    async list() {
-        const result = await Users.findAll();
-        return result;
-    }
+  async list() {
+    const result = await Users.findAll();
+    return result;
+  }
 
-    async save(body) {
+  async save(body) {
+    let admin = null;
 
-        let admin = null;
-
-        if (body.admin == null || body.admin == 0) {
-            admin = 0;
-
-        } else if (body.admin == 1) {
-            admin = 1;
-        }
-
-        const result = await Users.create({
-            name_and_surname: body.name_and_surname,
-            email: body.email,
-            password: databaseContext.literal(`AES_ENCRYPT('${body.password}','${process.env.USER_PASSWORD_KEY}')`),
-            admin: admin,
-            verified : 0
-        });
-        
-        return result;
+    if (body.admin == null || body.admin == 0) {
+      admin = 0;
+    } else if (body.admin == 1) {
+      admin = 1;
     }
 
-    async delete(id) {
-        await Users.destroy({
-            where : { id }
-        });
-    }
+    const result = await Users.create({
+      name_and_surname: body.name_and_surname,
+      email: body.email,
+      password: databaseContext.literal(
+        `AES_ENCRYPT('${body.password}','${process.env.USER_PASSWORD_KEY}')`
+      ),
+      admin: admin,
+      verify_uuid: uuid()
+    });
 
-    login(req, res, next) {
-        passport.authenticate("local", { 
-            successRedirect: "/",
-            failureRedirect: "/user/login",
-            failureFlash: true
-        })(req, res, next)
-    }
+    return result;
+  }
 
-    logout(req, res) {
-        req.logout();
-        req.flash("success_msg", "Você foi desconectado com sucesso");
-    }
+  async delete(id) {
+    await Users.destroy({
+      where: { id },
+    });
+  }
 
-    async setRecoveryHash(id, recovery_hash) {
-        await Users.update(
-            {
-                in_recovery : 1,
-                recovery_hash
-            },
-            {
-                where : { id }
-            }
-        )
-    }
+  login(req, res, next) {
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/user/login",
+      failureFlash: true,
+    })(req, res, next);
+  }
 
-    async verifyAccount(id) {
-        await Users.update(
-            {
-                verified : 1
-            },
-            {
-                where : { id }
-            }
-        )
-    }
+  logout(req, res) {
+    req.logout();
+    req.flash("success_msg", "Você foi desconectado com sucesso");
+  }
 
-    async updatePassword(password, recovery_hash) {
-        await Users.update(
-            {
-                password : databaseContext.literal(`AES_ENCRYPT('${password}','${process.env.USER_PASSWORD_KEY}')`),
-                in_recovery : 0
-            },
-            {
-                where : { recovery_hash }
-            }
-        )
-    }
+  async setRecoveryUuid(id, recovery_uuid) {
+    await Users.update(
+      {
+        in_recovery: 1,
+        recovery_uuid,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  async verifyAccount(verify_uuid) {
+    await Users.update(
+      {
+        verified: 1,
+      },
+      {
+        where: { verify_uuid },
+      }
+    );
+  }
+
+  async updatePassword(password, recovery_uuid, id) {
+    await Users.update(
+      {
+        password: databaseContext.literal(
+          `AES_ENCRYPT('${password}','${process.env.USER_PASSWORD_KEY}')`
+        ),
+        in_recovery: 0,
+      },
+      {
+        where: { recovery_uuid, id },
+      }
+    );
+  }
 }
 
-export { UserService }
+export { UserService };

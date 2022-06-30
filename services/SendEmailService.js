@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { config } from "dotenv";
 import { UserService } from "../services/UserService.js"
+import { uuid } from "uuidv4";
 config();
 
 class SendEmailService {
@@ -19,11 +20,8 @@ class SendEmailService {
         })
     }
 
-    async sendEmailForVerifyNewAccount(email, idVerify) {
-
-        idVerify *= Number(process.env.USER_PASSWORD_SEND_EMAIL);
-        idVerify += Number(process.env.USER_PASSWORD_SEND_EMAIL);
-        
+    async sendEmailForVerifyNewAccount(email, verify_uuid) {
+    
         const response = await this.transporter.sendMail({
             
             from: "noreply@peopleregister.net",
@@ -39,7 +37,7 @@ class SendEmailService {
                 <title>Verify Your Acc</title>
             </head>
             <body>
-                <a href="https://people-registers.herokuapp.com/user/verify/${idVerify}">Clique aqui para verificar seu e-mail</a>
+                <a href="https://people-registers.herokuapp.com/user/verify/${verify_uuid}">Clique aqui para verificar seu e-mail</a>
             </body>
             </html>`
         })
@@ -48,11 +46,7 @@ class SendEmailService {
 
     }
 
-    async recoveryPassword(email, idRecovery) {
-
-        let recoveryHash = global.SHA;
-
-        await this.userService.setRecoveryHash(idRecovery, recoveryHash);
+    async recoveryPassword(email, recovery_uuid) {
 
         const response = await this.transporter.sendMail({
             
@@ -70,7 +64,7 @@ class SendEmailService {
             </head>
             <body>
                 <h2>Este link expira em 20 minutos</h2>
-                <a href="https://people-registers.herokuapp.com/user/recoverypassword/${recoveryHash}">Clique aqui para alterar sua senha</a>
+                <a href="https://people-registers.herokuapp.com/user/recoverypassword/${recovery_uuid}">Clique aqui para alterar sua senha</a>
             </body>
             </html>`
         })
