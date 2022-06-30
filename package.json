@@ -25,6 +25,7 @@
     "postgres": "^1.0.2",
     "sequelize": "^6.17.0",
     "set-value": "^4.1.0",
+    "uuidv4": "^6.2.13",
     "xml": "^1.0.1"
   },
   "devDependencies": {
