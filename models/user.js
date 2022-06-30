@@ -17,7 +17,14 @@ const Users = databaseContext.define("users", {
         type : DataTypes.BOOLEAN,
         default : false
     },
-    recovery_hash : DataTypes.DECIMAL(20,2)
+    recovery_uuid: {
+        type: DataTypes.STRING(20),
+        default: null
+    },
+    verify_uuid: {
+        type: DataTypes.STRING(20),
+        default: null
+    }
 })
 
 export { Users }
