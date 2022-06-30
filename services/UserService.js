@@ -2,6 +2,8 @@ import { Users } from "../models/user.js";
 import { databaseContext } from "../models/databaseContext.js";
 import passport from "passport";
 import { uuid } from "uuidv4";
+import { config } from "dotenv";
+config();
 
 class UserService {
   async selectOneById(id) {
