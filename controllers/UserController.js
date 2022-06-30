@@ -1,10 +1,8 @@
 import { UserService } from "../services/UserService.js";
 import { SendEmailService } from "../services/SendEmailService.js";
 import { isValidLinkToRecoveryPassword } from "../config/isValidLinkToRecoveryPassword.js";
-import { config } from "dotenv";
 import { isUuid, uuid } from "uuidv4";
-import ResponseMessages  from "../utils/ResponseMessages.js"
-config();
+import ResponseUserMessages  from "../utils/ResponseUserMessages.js"
 class UserController {
   userService = new UserService();
   
@@ -48,8 +46,8 @@ class UserController {
       this.renderUsersList(
         req,
         res,
-        ResponseMessages.emailAlreadyInUse,
-        ResponseMessages.empty
+        ResponseUserMessages.emailAlreadyInUse,
+        ResponseUserMessages.empty
       );
     } else {
       const user = await this.userService.save(req.body);
@@ -61,8 +59,8 @@ class UserController {
       this.renderUsersList(
         req,
         res,
-        ResponseMessages.empty,
-        ResponseMessages.userIncludeSuccessfully
+        ResponseUserMessages.empty,
+        ResponseUserMessages.userIncludeSuccessfully
       );
     }
   }
@@ -72,8 +70,8 @@ class UserController {
       this.renderUsersList(
         req,
         res,
-        ResponseMessages.notDeleteAuthenUser,
-        ResponseMessages.empty
+        ResponseUserMessages.notDeleteAuthenUser,
+        ResponseUserMessages.empty
       );
     } else if (
       (await this.userService.selectOneById(req.params.id)).admin == 1
@@ -81,8 +79,8 @@ class UserController {
       this.renderUsersList(
         req,
         res,
-        ResponseMessages.notDeleteAdminUser,
-        ResponseMessages.empty
+        ResponseUserMessages.notDeleteAdminUser,
+        ResponseUserMessages.empty
       );
     } else {
       await this.userService.delete(req.params.id);
@@ -102,7 +100,7 @@ class UserController {
     const user = await this.userService.selectOneByEmail(req.body.email);
 
     if (!user) {
-      this.renderForgotPassword(req, res, ResponseMessages.userNotFound);
+      this.renderForgotPassword(req, res, ResponseUserMessages.userNotFound);
     } else {
       const recovery_uuid = uuid();
       await this.userService.setRecoveryUuid(idRecovery, recovery_uuid);
@@ -121,7 +119,7 @@ class UserController {
         this.renderUserRecoveryPassword(
           req,
           res,
-          ResponseMessages.recoveryPassLinkInvalid
+          ResponseUserMessages.recoveryPassLinkInvalid
         );
       } else {
         if (isValidLinkToRecoveryPassword(result.updatedAt)) {
@@ -136,7 +134,7 @@ class UserController {
             this.renderUserRecoveryPassword(
               req,
               res,
-              ResponseMessages.recoveryPassdNotAutorized
+              ResponseUserMessages.recoveryPassdNotAutorized
             );
           }
         }
@@ -145,7 +143,7 @@ class UserController {
       this.renderUserRecoveryPassword(
         req,
         res,
-        ResponseMessages.recoveryPassLinkInvalid
+        ResponseUserMessages.recoveryPassLinkInvalid
       );
     }
   }

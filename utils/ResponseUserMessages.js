@@ -1,4 +1,4 @@
-export default class ResponseMessages {
+export default class ResponseUserMessages {
   static empty = "";
   static emailAlreadyInUse = "Este endereço de e-mail já está sendo usado. ";
   static userIncludeSuccessfully = "Usuário incluído com sucesso. Peça ao novo usuário que acesse seu e-mail e confirme o cadastro.";
