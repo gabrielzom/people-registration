@@ -40,7 +40,6 @@ class SendEmailService {
             </body>
             </html>`
         })
-
         return response;
 
     }
