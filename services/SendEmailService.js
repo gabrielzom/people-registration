@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import { config } from "dotenv";
 import { UserService } from "../services/UserService.js"
-import { uuid } from "uuidv4";
 config();
 
 class SendEmailService {

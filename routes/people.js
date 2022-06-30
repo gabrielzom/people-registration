@@ -2,8 +2,6 @@ import express from "express";
 import { Router } from "express";
 import { PeopleController } from "../controllers/PeopleController.js";
 import { accessLevel } from "../helpers/accessLevel.js";
-import { config } from "dotenv";
-config();
 
 const people = Router();
 people.use(express.static("static"))
