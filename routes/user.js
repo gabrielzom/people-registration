@@ -28,7 +28,7 @@ user.post("/signup", accessLevel.isAdmin, (req, res) =>
     userController.registerUser(req, res)
 )
 
-user.get("/verify/:id", (req, res) => 
+user.get("/verify/:verify_uuid", (req, res) => 
     userController.verifyUser(req, res) 
 )
 
@@ -48,7 +48,7 @@ user.get("/recoverypassword/:id", (req, res) =>
     userController.renderUserRecoveryPassword(req, res, "")
 )
 
-user.put("/recoverypassword/:id", (req, res) =>
+user.put("/recoverypassword/:recovery_uuid", (req, res) =>
     userController.updateUserPassword(req, res)
 )
 
