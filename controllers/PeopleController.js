@@ -1,31 +1,30 @@
 import { PeopleService } from "../services/PeopleService.js";
 
 class PeopleController {
+  peopleService = new PeopleService();
 
-    peopleService = new PeopleService();
+  renderRegister(req, res) {
+    res.render("./people/register");
+  }
 
-    async renderPeoplesList(req, res) {
-        const peoples = await this.peopleService.list();
-        res.render("./people/list", { peoples : peoples })
-    }
+  registerPeople(req, res) {
+    this.peopleService.save(req.body);
+    res.render("./people/success-register");
+  }
 
-    renderRegister(req, res) {
-        res.render("./people/register")
-    }
+  async exportPeoples(req, res) {
+    const filename = await this.peopleService.export();
+    res.type("text").download(`./temp/${filename}`);
+  }
 
-    registerPeople(req, res) {
-        this.peopleService.save(req.body)
-        res.render("./people/success-register")
-    }
+  async peoplesToJson(req, res) {
+    return await this.peopleService.peoplesToJson(req, res);
+  }
 
-    async exportPeoples(req, res) {
-        const filename = await this.peopleService.export()
-        res.type('text').download(`./temp/${filename}`)
-    }
-
-    async peoplesToJson(req, res) {
-        return await this.peopleService.peoplesToJson(req, res)
-    }
+  async renderPeoplesList(req, res) {
+    const peoples = await this.peopleService.list();
+    res.render("./people/list", { peoples: peoples });
+  }
 }
-     
-export { PeopleController }
+
+export { PeopleController };

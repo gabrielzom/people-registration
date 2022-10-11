@@ -4,9 +4,29 @@ import { isValidLinkToRecoveryPassword } from "../config/isValidLinkToRecoveryPa
 import { isUuid, uuid } from "uuidv4";
 import ResponseUserMessages  from "../utils/ResponseUserMessages.js"
 class UserController {
-  userService = new UserService();
-  
+  userService = new UserService();  
   sendEmailService = new SendEmailService();
+
+  renderForgotPassword(req, res, error) { 
+    res.render("./user/forgotpassword", { error }); 
+  }
+
+  renderUserRecoveryPassword(req, res, error) { 
+    res.render("./user/recoverypassword", { error }); 
+  }
+
+  renderUserLogin(req, res) { 
+    res.render("./user/login"); 
+  }
+
+  userLogin(req, res, next) { 
+    this.userService.login(req, res, next); 
+  }
+
+  userLogout(req, res) {
+    this.userService.logout(req, res);
+    res.redirect("/");
+  }
 
   async renderUsersList(req, res, error_msg, success_msg) {
     const users = await this.userService.list();
@@ -17,31 +37,8 @@ class UserController {
     });
   }
 
-  renderForgotPassword(req, res, error) {
-    res.render("./user/forgotpassword", { error });
-  }
-
-  renderUserRecoveryPassword(req, res, error) {
-    res.render("./user/recoverypassword", { error });
-  }
-
-  renderUserLogin(req, res) {
-    res.render("./user/login");
-  }
-
-  userLogin(req, res, next) {
-    this.userService.login(req, res, next);
-  }
-
-  userLogout(req, res) {
-    this.userService.logout(req, res);
-    res.redirect("/");
-  }
-
-
   async registerUser(req, res) {
     const result = await this.userService.selectOneByEmail(req.body.email);
-
     if (result) {
       this.renderUsersList(
         req,
@@ -84,24 +81,19 @@ class UserController {
       );
     } else {
       await this.userService.delete(req.params.id);
-      return res.redirect("/user/list");
+      return res.redirect("./user/list");
     }
   }
 
   async verifyUser(req, res) {
     await this.userService.verifyAccount(req.params.verify_uuid);
-
     return res.render("./user/verified");
   }
 
-
-
   async sendEmailForRecoveryPassword(req, res) {
     const user = await this.userService.selectOneByEmail(req.body.email);
-
     if (!user) {
       this.renderForgotPassword(req, res, ResponseUserMessages.userNotFound);
-
     } else {
       const recovery_uuid = uuid();
       await this.userService.setRecoveryUuid(user.id, recovery_uuid);
@@ -115,7 +107,6 @@ class UserController {
       let result = await this.userService.selectOneByRecoveryUuid(
         req.params.recovery_uuid
       );
-
       if (!result) {
         this.renderUserRecoveryPassword(
           req,
