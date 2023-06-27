@@ -3,16 +3,16 @@
     <div style="background-color: #fff; border-radius: 10px; padding:20px" class="container">
       <% if (error_msg == '') { %>
         <%} else { %>
-        <div id="div-msg-warning" class="container alert alert-danger">
+        <div id="div-msg-warning-warn" class="container alert alert-danger">
           <%=error_msg %>
-          <!--button id="btn-close-msg" style="float: right;" type="button" class="btn-close" aria-label="Close"></button-->
+          <button id="btn-close-msg-warn" style="float: right;" type="button" class="btn-close" aria-label="Close"></button>
         </div>
       <% } %>
       <% if (success_msg == '') { %>
         <%} else { %>
-        <div id="div-msg-warning" class="container alert alert-success">
+        <div id="div-msg-warning-warn" class="container alert alert-success">
           <%=success_msg %>
-          <!--button id="btn-close-msg" style="float: right;" type="button" class="btn-close" aria-label="Close"></button-->
+          <button id="btn-close-msg-warn" style="float: right;" type="button" class="btn-close" aria-label="Close"></button>
         </div>
       <% } %>
         <br>

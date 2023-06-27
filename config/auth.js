@@ -16,7 +16,7 @@ const auth = (passport) => {
       }
     })
     .then(async (result) => {  
-      const resultOfEmail = await userService.selectOneByEmail(email);
+      const resultOfEmail = await userService.getByEmail(email);
       if (!result) {
         return done(null, false, { message : ResponseAuthMessages.userNotFound })
         
@@ -26,7 +26,7 @@ const auth = (passport) => {
       } else {
         databaseContext.query(`SELECT CAST(AES_DECRYPT(password, '${process.env.USER_PASSWORD_KEY}') AS CHAR) AS password FROM users WHERE email='${email}'`)
           .then((user) => {
-            if (user[0][0].password == password) {
+            if (user[0][0].password === password) {
               return done(null, result)
             
             } else {

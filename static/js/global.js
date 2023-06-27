@@ -42,6 +42,13 @@ $("#btn-logout").on("click", () => {
 })
 
 $("#btn-close-msg").on("click", () => {
-	$(".container").remove("#div-msg-warning")
+	debugger
+	console.log('ioASHDGIOHAOFGO1')
+	$("#div-msg-warning").remove()
 })
 
+$("#btn-close-msg-warn").on("click", () => {
+	debugger
+	console.log('ioASHDGIOHAOFGO2')
+	$("#div-msg-warning-warn").remove()
+})

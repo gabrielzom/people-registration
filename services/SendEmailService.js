@@ -1,12 +1,9 @@
 import nodemailer from "nodemailer";
 import { config } from "dotenv";
-import { UserService } from "../services/UserService.js"
 config();
 
 class SendEmailService {
-
-    transporter;
-    userService = new UserService();
+    transporter
 
     constructor() {
          this.transporter = nodemailer.createTransport({
@@ -20,13 +17,11 @@ class SendEmailService {
     }
 
     async sendEmailForVerifyNewAccount(email, verify_uuid) {
-    
-        const response = await this.transporter.sendMail({
-            
-            from: "noreply@peopleregister.net",
+        return await this.transporter.sendMail({
+            from: 'noreply@peopleregister.net',
             to: email,
             replyTo: process.env.SMTP_USER,
-            subject: "Verifique sua conta no People Register",
+            subject: 'Verifique sua conta no People Register',
             html: `<!DOCTYPE html>
             <html lang="pt-BR">
             <head>
@@ -40,18 +35,14 @@ class SendEmailService {
             </body>
             </html>`
         })
-        return response;
-
     }
 
     async recoveryPassword(email, recovery_uuid) {
-
-        const response = await this.transporter.sendMail({
-            
-            from: "noreply@peopleregister.net",
+        return await this.transporter.sendMail({
+            from: 'noreply@peopleregister.net',
             to: email,
             replyTo: process.env.SMTP_USER,
-            subject: "Alteração de senha People Register",
+            subject: 'Alteração de senha People Register',
             html: `<!DOCTYPE html>
             <html lang="pt-BR">
             <head>
@@ -66,25 +57,18 @@ class SendEmailService {
             </body>
             </html>`
         })
-
-        return response;
-
     }
 
-
     async send(email, subject, text) {
-
-        const response = await this.transporter.sendMail({
-            
-            from: "noreply@peopleregister.net",
+        return await this.transporter.sendMail({
+            from: 'noreply@peopleregister.net',
             to: email,
             replyTo: process.env.SMTP_USER,
             subject,
-            text
+            text,
         })
-
-        return response;
     }
+
 }
 
 export { SendEmailService }
